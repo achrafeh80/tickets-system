@@ -1,0 +1,21 @@
+# Node
+node_modules/
+.env
+logs/
+
+# Docker
+*.log
+*.pid
+mongo-backups/
+services/**/logs/
+
+# IDEs
+.vscode/
+.idea/
+
+# Tests
+coverage/
+
+# Build
+dist/
+build/

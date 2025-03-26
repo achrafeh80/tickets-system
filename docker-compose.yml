@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  user-service:
+    build: ./services/user-service
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./services/user-service/.env
+    depends_on:
+      - mongo
+    networks:
+      - backend
+
+  event-service:
+    build: ./services/event-service
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./services/event-service/.env
+    depends_on:
+      - mongo
+    networks:
+      - backend
+
+  ticket-service:
+    build: ./services/ticket-service
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./services/ticket-service/.env
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - backend
+
+  notification-service:
+    build: ./services/notification-service
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./services/notification-service/.env
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - backend
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./api-gateway/.env
+    depends_on:
+      - user-service
+      - event-service
+      - ticket-service
+      - notification-service
+    networks:
+      - backend
+
+  mongo:
+    image: mongo:6
+    container_name: ticket-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ticket-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
+volumes:
+  mongo-data:
+
+networks:
+  backend:
