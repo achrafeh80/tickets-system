@@ -31,7 +31,6 @@ const purchaseSchema = Joi.object({
   paymentToken: Joi.string().required()
 });
 
-
 // Centralized error handler
 const handleControllerError = (res, error, action) => {
   logger.error(`${action} error:`, error);
@@ -89,10 +88,7 @@ exports.reserveTickets = async (req, res, next) => {
       -quantity, 
       req.header('Authorization')?.replace('Bearer ', '')
     );
-
-
     
-
     
     if (!updateResponse.success) {
       return res.status(400).json({
@@ -575,8 +571,6 @@ exports.checkInTicket = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 function validateEventSeats(event) {
   return event && typeof event.availableSeats === 'number' && event.availableSeats >= 0;
