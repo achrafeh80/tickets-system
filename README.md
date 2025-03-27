@@ -22,3 +22,9 @@ Microservices app to manage events, tickets and users.
 
 ```bash
 docker-compose up --build
+```
+
+## ▶️ Run Locally without docker-compose
+1. Clone the project and enter in by cd tickets-system
+2. on each service run npm start
+3. got to swagger and test Api
